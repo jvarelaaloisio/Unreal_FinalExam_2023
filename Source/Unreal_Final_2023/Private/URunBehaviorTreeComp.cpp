@@ -27,7 +27,7 @@ void UURunBehaviorTreeComp::BeginPlay()
 	blackboard = Cast<UBlackboardComponent>(bb_comp);
 	if (blackboard)
 	{
-		blackboard->Activate();
+		AIController->UseBlackboard(blackboard->GetBlackboardAsset(), blackboard);
 		blackboard->SetValueAsObject(TargetBlackBoardKey, Target);
 		auto ps_comp = Owner->GetComponentByClass(UPawnSensingComponent::StaticClass());
 		PawnSensing = Cast<UPawnSensingComponent>(ps_comp);
@@ -46,7 +46,12 @@ void UURunBehaviorTreeComp::SetSight()
 {
 	if (blackboard && PawnSensing)
 	{
-		bool canSeePlayer = PawnSensing->HasLineOfSightTo(Target);
-		blackboard->SetValueAsBool(CanSeePlayerKey, canSeePlayer);
+		bool CanSeeTarget = PawnSensing->HasLineOfSightTo(Target);
+		blackboard->SetValueAsBool(CanSeeTargetKey, CanSeeTarget);
+		auto value = blackboard->GetValueAsBool(CanSeeTargetKey);
+
+		AAIController* AIController = Cast<AAIController>(GetOwner()->GetInstigatorController());
+		if (AIController)
+			AIController->RunBehaviorTree(BehaviorTree);
 	}
 }
