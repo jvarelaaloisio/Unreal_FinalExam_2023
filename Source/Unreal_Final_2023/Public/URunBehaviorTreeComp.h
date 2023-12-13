@@ -20,7 +20,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 		FName TargetBlackBoardKey = "TargetActor";
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-		FName CanSeePlayerKey = "CanSeeTarget";
+		FName CanSeeTargetKey = "CanSeeTarget";
 	class UPawnSensingComponent* PawnSensing;
 	class UBlackboardComponent* blackboard;
 
