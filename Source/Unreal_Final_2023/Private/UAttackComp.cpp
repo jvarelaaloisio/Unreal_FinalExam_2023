@@ -11,11 +11,6 @@ UUAttackComp::UUAttackComp()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-	if (!CollisionComp)
-	{
-		CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("Hit Area"));
-		CollisionComp->OnComponentHit.AddDynamic(this, &UUAttackComp::OnHit);
-	}
 	// ...
 }
 
@@ -24,7 +19,11 @@ UUAttackComp::UUAttackComp()
 void UUAttackComp::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (!CollisionComp)
+	{
+		CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("Hit Area"));
+	}
+	CollisionComp->OnComponentHit.AddDynamic(this, &UUAttackComp::OnHit);
 }
 
 

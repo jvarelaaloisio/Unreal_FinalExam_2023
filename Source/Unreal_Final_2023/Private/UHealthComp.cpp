@@ -9,7 +9,7 @@ UUHealthComp::UUHealthComp()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -21,13 +21,6 @@ void UUHealthComp::BeginPlay()
 	Super::BeginPlay();
 	HealthPoints = MaxHealthPoints;
 	
-}
-
-
-// Called every frame
-void UUHealthComp::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
 void UUHealthComp::TakeDamage(int damagePoints)
@@ -48,7 +41,7 @@ void UUHealthComp::ChangeHP(const int& points)
 	if (HealthPoints < 0)
 		HealthPoints = 0;
 	OnHealthPointsChanged.Broadcast(HealthPoints);
-	UE_LOG(LogTemp, Log, TEXT("HP: "), HealthPoints);
+	UE_LOG(LogTemp, Log, TEXT("HP: %d"), HealthPoints);
 }
 
 int UUHealthComp::GetHealthPoints()
