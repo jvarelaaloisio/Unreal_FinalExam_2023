@@ -30,6 +30,8 @@ public:
 	void ChangeHP(const int& healPoints);
 	UFUNCTION(BlueprintPure, Category = "HP")
 	int GetHealthPoints();
+	UFUNCTION(BlueprintPure, Category = "HP")
+		int GetMaxHealthPoints();
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHPEvent, int, newHP);
 
 	UPROPERTY(BlueprintAssignable)
