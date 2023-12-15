@@ -57,7 +57,7 @@ void UDoorComp::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 			}
 		}
 	}
-	if (quantity > 0 && TaggedActorQty < quantity / 2)
+	if (quantity > 0 && TaggedActorQty <= quantity / 2)
 	{
 		OnOpen.Broadcast();
 		UE_LOG(LogTemp, Log, TEXT("Door opened"));
