@@ -53,4 +53,3 @@ int UUHealthComp::GetMaxHealthPoints()
 {
 	return MaxHealthPoints;
 }
-

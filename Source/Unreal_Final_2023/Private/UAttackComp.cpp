@@ -19,11 +19,10 @@ UUAttackComp::UUAttackComp()
 void UUAttackComp::BeginPlay()
 {
 	Super::BeginPlay();
-	if (!CollisionComp)
+	if (CollisionComp)
 	{
-		CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("Hit Area"));
+		CollisionComp->OnComponentHit.AddDynamic(this, &UUAttackComp::OnHit);
 	}
-	CollisionComp->OnComponentHit.AddDynamic(this, &UUAttackComp::OnHit);
 }
 
 
@@ -39,13 +38,17 @@ void UUAttackComp::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrim
 {
 	if (OtherActor != nullptr && OtherActor != GetOwner())
 	{
-		// Try to get a specific component from the other actor
-		UUHealthComp* healthComp = OtherActor->FindComponentByClass<UUHealthComp>();
-
-		if (healthComp != nullptr)
-		{
-			healthComp->TakeDamage(AttackPoints);
-		}
+		Attack(OtherActor);
 	}
 	HitComp->SetGenerateOverlapEvents(false);
+}
+
+void UUAttackComp::Attack(AActor* OtherActor)
+{
+	UUHealthComp* healthComp = OtherActor->FindComponentByClass<UUHealthComp>();
+
+	if (healthComp != nullptr)
+	{
+		healthComp->TakeDamage(AttackPoints);
+	}
 }
